@@ -17,9 +17,6 @@ namespace BooksCatalog.ViewModel
     {
         private readonly IDialogService _dialogService;
         private readonly List<Book> _openedBooks = new List<Book>();
-        private ObservableCollection<Book> _books;
-        private Book _selectedBook;
-        private RelayCommand _showDetails;
 
         public TableViewModel(IDialogService dialogService)
         {
@@ -29,7 +26,14 @@ namespace BooksCatalog.ViewModel
                 book => { SetBooksByCatalogId(book.CatalogId); });
             Messenger.Default.Register<Book>(this, BooksMessageType.Closed,
                 book => { _openedBooks.RemoveAll(x => x.Id == book.Id); });
+            Messenger.Default.Register<List<Book>>(this, books => { Books = new ObservableCollection<Book>(books); });
         }
+
+        #region Properties
+
+        #region Books
+
+        private ObservableCollection<Book> _books;
 
         public ObservableCollection<Book> Books
         {
@@ -37,11 +41,27 @@ namespace BooksCatalog.ViewModel
             set { Set(() => Books, ref _books, value); }
         }
 
+        #endregion
+
+        #region SelectedBook
+
+        private Book _selectedBook;
+
         public Book SelectedBook
         {
             get { return _selectedBook; }
             set { Set(() => SelectedBook, ref _selectedBook, value); }
         }
+
+        #endregion
+
+        #endregion
+
+        #region Commands
+
+        #region ShowDetails
+
+        private RelayCommand _showDetails;
 
         public RelayCommand ShowDetails => _showDetails ?? (_showDetails = new RelayCommand(ShowDetailsCommand));
 
@@ -50,10 +70,15 @@ namespace BooksCatalog.ViewModel
             if (_openedBooks.All(x => x.Id != SelectedBook.Id))
             {
                 _openedBooks.Add(SelectedBook);
-                var bookViewModel = new BookViewModel(SelectedBook);
-                _dialogService.Show<BookView>(this, bookViewModel);
+                _dialogService.Show<BookView>(this, new BookViewModel(SelectedBook));
             }
         }
+
+        #endregion
+
+        #endregion
+
+        #region Message Handler
 
         private void SetBooksByCatalog(Catalog catalog)
         {
@@ -65,8 +90,9 @@ namespace BooksCatalog.ViewModel
             Books =
                 new ObservableCollection<Book>(
                     ServiceLocator.Current.GetInstance<IRepository<Book>>()
-                        .GetAll()
                         .Where(x => x.CatalogId == id));
         }
+
+        #endregion
     }
 }

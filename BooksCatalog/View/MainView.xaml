@@ -4,19 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:BooksCatalog.View"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         mc:Ignorable="d"
         Title="Каталог книг"
         SizeToContent="WidthAndHeight"
         MinWidth="500"
         MinHeight="500"
-        DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
+        md:DialogServiceViews.IsRegistered="True">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <view:TreeUserControl Grid.Column="0" Grid.Row="0" />
-        <view:TableUserControl Grid.Column="2" Grid.Row="0" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Content="Поиск" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Width="50" HorizontalAlignment="Left"
+                Margin="3" Command="{Binding Search}" />
+        <view:TreeUserControl Grid.Column="0" Grid.Row="1" />
+        <view:TableUserControl Grid.Column="2" Grid.Row="1" />
     </Grid>
 </Window>

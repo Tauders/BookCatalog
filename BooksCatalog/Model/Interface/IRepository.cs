@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using BooksCatalog.Model.Entities;
 
 namespace BooksCatalog.Model.Interface
@@ -11,5 +13,7 @@ namespace BooksCatalog.Model.Interface
         void Add(T entity);
         void Update(T entity);
         void Delete(long id);
+        List<T> Where(Expression<Func<T, bool>> condition);
+        List<T> Search(string str);
     }
 }

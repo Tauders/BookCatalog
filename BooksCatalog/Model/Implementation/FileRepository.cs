@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 using System.Xml.Serialization;
 using BooksCatalog.Model.Entities;
 using BooksCatalog.Model.Interface;
@@ -37,6 +38,16 @@ namespace BooksCatalog.Model.Implementation
         }
 
         public void Delete(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<T> Where(Expression<Func<T, bool>> condition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<T> Search(string str)
         {
             throw new NotImplementedException();
         }

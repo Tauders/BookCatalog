@@ -3,8 +3,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BooksCatalog.View"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         mc:Ignorable="d"
-        Title="SearchWindow" Height="300" Width="300">
-    <Grid />
+        Title="Поиск" Height="300" Width="300"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Search}"
+        md:DialogServiceViews.IsRegistered="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+            <TextBox Margin="3" MinWidth="200" x:Name="TextBoxSearch"
+                     Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Content="Поиск" Margin="3" Command="{Binding Search}"
+                    CommandParameter="{Binding SearchString}" />
+        </StackPanel>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding SearchResult}"
+                  AutoGenerateColumns="False"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  CanUserAddRows="False"
+                  SelectedItem="{Binding Path=SelectedResult}"
+                  CanUserDeleteRows="False"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" Binding="{Binding Path=Title}" Width="Auto" />
+                <DataGridTemplateColumn Header="Действия" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button
+                                    Command="{Binding Path=DataContext.ShowDetails, RelativeSource= {RelativeSource FindAncestor,  AncestorType={x:Type DataGrid}}}"
+                                    Content="Подробнее" />
+                                <Button
+                                    Command="{Binding Path=DataContext.ShowInCatalog, RelativeSource= {RelativeSource FindAncestor,  AncestorType={x:Type DataGrid}}}"
+                                    Content="Открыть в каталоге" />
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </Window>

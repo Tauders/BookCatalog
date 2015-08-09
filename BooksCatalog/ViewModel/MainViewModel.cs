@@ -1,4 +1,7 @@
+using BooksCatalog.View;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using MvvmDialogs;
 
 namespace BooksCatalog.ViewModel
 {
@@ -16,5 +19,24 @@ namespace BooksCatalog.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        private readonly IDialogService _dialogService;
+
+        public MainViewModel(IDialogService dialogService)
+        {
+            _dialogService = dialogService;
+        }
+
+        #region Search
+
+        private RelayCommand _search;
+
+        public RelayCommand Search => _search ?? (_search = new RelayCommand(SearchCommand));
+
+        private void SearchCommand()
+        {
+            _dialogService.ShowDialog<SearchWindow>(this, new SearchViewModel(_dialogService));
+        }
+
+        #endregion
     }
 }

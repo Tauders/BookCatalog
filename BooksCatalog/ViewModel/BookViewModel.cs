@@ -12,33 +12,52 @@ namespace BooksCatalog.ViewModel
 {
     public class BookViewModel : ViewModelBase
     {
-        private RelayCommand<object> _closeCommand;
-        private RelayCommand _save;
+        private readonly bool _fromSearch;
 
-        public BookViewModel(Book book)
+        public BookViewModel(Book book, bool fromSearch = false)
         {
+            _fromSearch = fromSearch;
             Mapper.Map(book, this);
         }
 
+        #region Commands
+
+        #region SaveCommand
+
         public RelayCommand Save => _save ?? (_save = new RelayCommand(SaveCommand));
 
-        public RelayCommand<object> CloseWindow
-            => _closeCommand ?? (_closeCommand = new RelayCommand<object>(CloseWindowCommand));
+        private RelayCommand _save;
 
         private void SaveCommand()
         {
             Book book = Mapper.Map<Book>(this);
             ServiceLocator.Current.GetInstance<IRepository<Book>>().Update(book);
-            Messenger.Default.Send(book, BooksMessageType.Saved);
+            Messenger.Default.Send(book, _fromSearch ? BooksMessageType.FromSearch : BooksMessageType.Saved);
         }
 
+        #endregion
+
+        #region CloseWindowCommand
+
+        private RelayCommand<object> _closeCommand;
+
         //TODO добавить обработку закрытия по крестику
+        //TODO пересмотреть закрытие окна
         private void CloseWindowCommand(object obj)
         {
             Window win = obj as Window;
             Messenger.Default.Send(Mapper.Map<Book>(this), BooksMessageType.Closed);
             win.Close();
         }
+
+        public RelayCommand<object> CloseWindow
+            => _closeCommand ?? (_closeCommand = new RelayCommand<object>(CloseWindowCommand));
+
+        #endregion
+
+        #endregion
+
+        #region Properties
 
         #region Id
 
@@ -75,8 +94,6 @@ namespace BooksCatalog.ViewModel
         }
 
         #endregion
-
-        #region CatalogId
 
         private long _catalogId;
 

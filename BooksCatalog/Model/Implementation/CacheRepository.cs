@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using BooksCatalog.Model.Entities;
 using BooksCatalog.Model.Interface;
 
@@ -36,6 +39,17 @@ namespace BooksCatalog.Model.Implementation
         public void Delete(long id)
         {
             Entities.RemoveAll(x => x.Id == id);
+        }
+
+        public List<T> Where(Expression<Func<T, bool>> condition)
+        {
+            return Entities.AsQueryable().Where(condition).ToList();
+        }
+
+        public virtual List<T> Search(string str)
+        {
+            //TODO Сделать общий поиск
+            throw new NotImplementedException();
         }
     }
 }

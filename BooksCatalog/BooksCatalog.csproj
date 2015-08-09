@@ -88,6 +88,7 @@
     <Compile Include="Model\Entities\BaseEntity.cs" />
     <Compile Include="Model\Entities\Book.cs" />
     <Compile Include="Model\Entities\Catalog.cs" />
+    <Compile Include="Model\Implementation\BooksRepository.cs" />
     <Compile Include="Model\Implementation\CacheRepository.cs" />
     <Compile Include="Model\Implementation\FileRepository.cs" />
     <Compile Include="Model\Interface\IRepository.cs" />

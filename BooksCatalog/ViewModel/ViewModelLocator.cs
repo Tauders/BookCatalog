@@ -37,18 +37,21 @@ namespace BooksCatalog.ViewModel
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             SimpleIoc.Default.Register<IRepository<Book>>(
-                () => new CacheRepository<Book>(new FileRepository<Book>().GetAll()));
+                () => new BooksRepository(new FileRepository<Book>().GetAll()));
             SimpleIoc.Default.Register<IRepository<Catalog>>(
                 () => new CacheRepository<Catalog>(new FileRepository<Catalog>().GetAll()));
             SimpleIoc.Default.Register<IDialogService>(() => new DialogService());
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<BookViewModel>();
             SimpleIoc.Default.Register<TreeViewModel>();
             SimpleIoc.Default.Register<TableViewModel>();
+            SimpleIoc.Default.Register<SearchViewModel>();
         }
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
         public TreeViewModel Tree => ServiceLocator.Current.GetInstance<TreeViewModel>();
         public TableViewModel Table => ServiceLocator.Current.GetInstance<TableViewModel>();
+        public SearchViewModel Search => ServiceLocator.Current.GetInstance<SearchViewModel>();
 
         public static void Cleanup()
         {

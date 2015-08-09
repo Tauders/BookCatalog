@@ -11,12 +11,6 @@ namespace BooksCatalog.ViewModel
 {
     public class TreeViewModel : ViewModelBase
     {
-        #region DummyChildren
-
-        public static readonly TreeViewModel DummyChild = new TreeViewModel();
-
-        #endregion
-
         public TreeViewModel()
         {
             Children = new ObservableCollection<TreeViewModel>();
@@ -35,7 +29,7 @@ namespace BooksCatalog.ViewModel
         private void LoadChildren()
         {
             var repository = ServiceLocator.Current.GetInstance<IRepository<Catalog>>();
-            foreach (var catalogVm in repository.GetAll().Where(x => x.ParentId == Id))
+            foreach (var catalogVm in repository.Where(x => x.ParentId == Id))
             {
                 TreeViewModel catalogViewModel = new TreeViewModel(catalogVm);
                 if (repository.GetAll().Any(y => y.ParentId == catalogVm.Id))
@@ -43,6 +37,14 @@ namespace BooksCatalog.ViewModel
                 Children.Add(catalogViewModel);
             }
         }
+
+        #region Properties
+
+        #region DummyChildren
+
+        private static readonly TreeViewModel DummyChild = new TreeViewModel();
+
+        #endregion
 
         #region IsExpanded
 
@@ -126,6 +128,8 @@ namespace BooksCatalog.ViewModel
             get { return _children; }
             set { Set(() => Children, ref _children, value); }
         }
+
+        #endregion
 
         #endregion
     }
