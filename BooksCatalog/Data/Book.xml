@@ -1,0 +1,39 @@
+﻿<?xml version="1.0"?>
+<ArrayOfBook xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Book>
+    <Id>0</Id>
+    <Title>Algorithms</Title>
+    <Annotation>This text, extensively class-tested over a decade at UC Berkeley and UC San Diego, explains the fundamentals of algorithms in a story line that makes the material enjoyable and easy to digest. Emphasis is placed on understanding the crisp mathematical idea behind each algorithm, in a manner that is intuitive and rigorous without being unduly formal.</Annotation>
+    <CatalogId>2</CatalogId>
+  </Book>
+  <Book>
+    <Id>1</Id>
+    <Title>AI Algorithms, Data Structures, and Idioms in Prolog, Lisp, and Java</Title>
+    <Annotation>This book illustrates how to program AI algorithms in Lisp, Prolog, and Java. The book basically cover each topic 3 times in each language. Topics include: simple production-like system based on logic, logic-based learning, and natural language parsing.</Annotation>
+    <CatalogId>2</CatalogId>
+  </Book>
+  <Book>
+    <Id>2</Id>
+    <Title>The Black Art of Programming</Title>
+    <Annotation>This book is an introduction to computer programming. It covers the essential information of a Computer Science course. It is recommended for beginners and intermediate programmers.</Annotation>
+    <CatalogId>2</CatalogId>
+  </Book>
+  <Book>
+    <Id>3</Id>
+    <Title>Microsoft's Windows AppStudio</Title>
+    <Annotation>This EBook is the result of a challenge, to integrate Azure Mobile Service with Windows AppStudio Applications from the Windows AppStudio Team.</Annotation>
+    <CatalogId>4</CatalogId>
+  </Book>
+  <Book>
+    <Id>4</Id>
+    <Title>Step into Windows Phone 8</Title>
+    <Annotation>This book is written for the beginners who are thinking to start learning Windows Phone 8 Development.</Annotation>
+    <CatalogId>4</CatalogId>
+  </Book>
+  <Book>
+    <Id>5</Id>
+    <Title>New Features in C# 6.0</Title>
+    <Annotation>In this book we are going to learn new features of C# 6.0 which are introduced by the Microsoft.</Annotation>
+    <CatalogId>4</CatalogId>
+  </Book>
+</ArrayOfBook>

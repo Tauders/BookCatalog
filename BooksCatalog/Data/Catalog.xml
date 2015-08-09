@@ -1,0 +1,43 @@
+﻿<?xml version="1.0"?>
+<ArrayOfCatalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Catalog>
+    <Id>0</Id>
+    <Title>Техническая литература</Title>
+    <ParentId xsi:nil="true" />
+  </Catalog>
+  <Catalog>
+    <Id>1</Id>
+    <Title>Информационные технологии</Title>
+    <ParentId>0</ParentId>
+  </Catalog>
+  <Catalog>
+    <Id>2</Id>
+    <Title>Computer Science</Title>
+    <ParentId>1</ParentId>
+  </Catalog>
+  <Catalog>
+    <Id>3</Id>
+    <Title>Технологии разработки</Title>
+    <ParentId>1</ParentId>
+  </Catalog>
+  <Catalog>
+    <Id>4</Id>
+    <Title>.NET</Title>
+    <ParentId>3</ParentId>
+  </Catalog>
+  <Catalog>
+    <Id>5</Id>
+    <Title>Java</Title>
+    <ParentId>3</ParentId>
+  </Catalog>
+  <Catalog>
+    <Id>6</Id>
+    <Title>Художественная литература</Title>
+    <ParentId xsi:nil="true" />
+  </Catalog>
+  <Catalog>
+    <Id>7</Id>
+    <Title>Журналы и статьи</Title>
+    <ParentId xsi:nil="true" />
+  </Catalog>
+</ArrayOfCatalog>

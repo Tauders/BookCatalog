@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BooksCatalog
+namespace BooksCatalog.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for TableUserControl.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TableUserControl : UserControl
     {
-        public MainWindow()
+        public TableUserControl()
         {
             InitializeComponent();
         }
