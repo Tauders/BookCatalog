@@ -3,7 +3,6 @@
     public enum BooksMessageType
     {
         Saved,
-        Closed,
-        FromSearch
+        Closed
     }
 }

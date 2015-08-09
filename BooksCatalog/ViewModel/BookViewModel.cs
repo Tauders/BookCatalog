@@ -12,11 +12,9 @@ namespace BooksCatalog.ViewModel
 {
     public class BookViewModel : ViewModelBase
     {
-        private readonly bool _fromSearch;
 
-        public BookViewModel(Book book, bool fromSearch = false)
+        public BookViewModel(Book book)
         {
-            _fromSearch = fromSearch;
             Mapper.Map(book, this);
         }
 
@@ -32,7 +30,7 @@ namespace BooksCatalog.ViewModel
         {
             Book book = Mapper.Map<Book>(this);
             ServiceLocator.Current.GetInstance<IRepository<Book>>().Update(book);
-            Messenger.Default.Send(book, _fromSearch ? BooksMessageType.FromSearch : BooksMessageType.Saved);
+            Messenger.Default.Send(book, BooksMessageType.Saved);
         }
 
         #endregion

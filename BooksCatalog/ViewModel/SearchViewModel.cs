@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using BooksCatalog.Model;
 using BooksCatalog.Model.Entities;
 using BooksCatalog.Model.Interface;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Practices.ServiceLocation;
 using MvvmDialogs;
 
@@ -16,15 +13,6 @@ namespace BooksCatalog.ViewModel
         public SearchViewModel(IDialogService dialogService)
             : base(dialogService)
         {
-            Messenger.Default.Register<Book>(this, BooksMessageType.FromSearch,
-                book =>
-                {
-                    var originalBook = Books.FirstOrDefault(x => x.Id == book.Id);
-                    if (originalBook != null)
-                    {
-                        Books[Books.IndexOf(originalBook)] = book;
-                    }
-                });
         }
 
         public bool? DialogResult { get; }
