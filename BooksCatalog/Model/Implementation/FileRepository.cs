@@ -14,7 +14,7 @@ namespace BooksCatalog.Model.Implementation
         {
             XmlSerializer formatter = new XmlSerializer(typeof (List<T>));
             List<T> entities;
-            using (FileStream fs = new FileStream(Path.Combine("Data", typeof (T).Name + ".xml"), FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream(Path.Combine("Data", typeof (T).Name + ".xml"), FileMode.Open))
             {
                 entities = (List<T>) formatter.Deserialize(fs);
             }

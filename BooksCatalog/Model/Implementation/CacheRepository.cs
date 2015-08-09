@@ -13,7 +13,7 @@ namespace BooksCatalog.Model.Implementation
 
         public CacheRepository(List<T> listOfEntities)
         {
-            Entities = listOfEntities;
+            Entities = new List<T>(listOfEntities);
         }
 
         public List<T> GetAll()
@@ -33,7 +33,9 @@ namespace BooksCatalog.Model.Implementation
 
         public void Update(T entity)
         {
-            Entities[Entities.FindIndex(x => x.Id == entity.Id)] = entity;
+            var index = Entities.FindIndex(x => x.Id == entity.Id);
+            if (index == -1) { throw new Exception("Нет сущности для обновления");}
+            Entities[index] = entity;
         }
 
         public void Delete(long id)
