@@ -79,16 +79,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\BooksMessageType.cs" />
     <Compile Include="Model\Entities\BaseEntity.cs" />
     <Compile Include="Model\Entities\Book.cs" />
     <Compile Include="Model\Entities\Catalog.cs" />
     <Compile Include="Model\Implementation\CacheRepository.cs" />
-    <Compile Include="Model\Implementation\CatalogsRepository.cs" />
     <Compile Include="Model\Implementation\FileRepository.cs" />
     <Compile Include="Model\Interface\IRepository.cs" />
+    <Compile Include="ViewModel\BookViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\TableViewModel.cs" />
     <Compile Include="ViewModel\TreeViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\BookView.xaml.cs">
+      <DependentUpon>BookView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -102,6 +107,10 @@
     <Compile Include="View\TreeUserControl.xaml.cs">
       <DependentUpon>TreeUserControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\BookView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

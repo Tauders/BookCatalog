@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BooksCatalog.Model.Entities;
 using BooksCatalog.Model.Interface;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Practices.ServiceLocation;
 
 namespace BooksCatalog.ViewModel
 {
-    public class TreeViewModel:ViewModelBase
+    public class TreeViewModel : ViewModelBase
     {
+        #region DummyChildren
+
+        public static readonly TreeViewModel DummyChild = new TreeViewModel();
+
+        #endregion
+
         public TreeViewModel()
         {
             Children = new ObservableCollection<TreeViewModel>();
@@ -29,12 +31,19 @@ namespace BooksCatalog.ViewModel
             Children = new ObservableCollection<TreeViewModel>();
         }
 
-        #region DummyChildren
+        private bool HasDummyChild => Children.Count == 1 && Children[0] == DummyChild;
 
-        public static readonly TreeViewModel DummyChild = new TreeViewModel();
-
-        #endregion
-
+        private void LoadChildren()
+        {
+            var repository = ServiceLocator.Current.GetInstance<IRepository<Catalog>>();
+            foreach (var catalogVm in repository.GetAll().Where(x => x.ParentId == Id))
+            {
+                TreeViewModel catalogViewModel = new TreeViewModel(catalogVm);
+                if (repository.GetAll().Any(y => y.ParentId == catalogVm.Id))
+                    catalogViewModel.Children.Add(DummyChild);
+                Children.Add(catalogViewModel);
+            }
+        }
 
         #region IsExpanded
 
@@ -63,7 +72,12 @@ namespace BooksCatalog.ViewModel
         public bool IsSelected
         {
             get { return _isSelected; }
-            set { Set(() => IsSelected, ref _isSelected, value); }
+            set
+            {
+                Set(() => IsSelected, ref _isSelected, value);
+                var id = this.Id;
+                if (id != null) Messenger.Default.Send(new Catalog() {Id = id.Value});
+            }
         }
 
         #endregion
@@ -104,20 +118,6 @@ namespace BooksCatalog.ViewModel
 
         #endregion
 
-        private bool HasDummyChild => Children.Count == 1 && Children[0] == DummyChild;
-
-        private void LoadChildren()
-        {
-            var repository = ServiceLocator.Current.GetInstance<IRepository<Catalog>>();
-            foreach (var catalogVm in repository.GetAll().Where(x => x.ParentId == Id))
-            {
-                TreeViewModel catalogViewModel = new TreeViewModel(catalogVm);
-                if (repository.GetAll().Any(y => y.ParentId == catalogVm.Id))
-                    catalogViewModel.Children.Add(DummyChild);
-                Children.Add(catalogViewModel);
-            }
-        }
-
         #region Children
 
         private ObservableCollection<TreeViewModel> _children;
@@ -129,6 +129,5 @@ namespace BooksCatalog.ViewModel
         }
 
         #endregion
-
     }
 }

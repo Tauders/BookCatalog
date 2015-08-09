@@ -17,6 +17,7 @@ using BooksCatalog.Model.Implementation;
 using BooksCatalog.Model.Interface;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using MvvmDialogs;
 
 namespace BooksCatalog.ViewModel
 {
@@ -37,13 +38,17 @@ namespace BooksCatalog.ViewModel
                 () => new CacheRepository<Book>(new FileRepository<Book>().GetAll()));
             SimpleIoc.Default.Register<IRepository<Catalog>>(
                 () => new CacheRepository<Catalog>(new FileRepository<Catalog>().GetAll()));
+            SimpleIoc.Default.Register<IDialogService>(() => new DialogService());
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<TreeViewModel>();
+            SimpleIoc.Default.Register<TableViewModel>();
         }
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
         public TreeViewModel Tree => ServiceLocator.Current.GetInstance<TreeViewModel>();
+
+        public TableViewModel Table => ServiceLocator.Current.GetInstance<TableViewModel>();
 
         public static void Cleanup()
         {
