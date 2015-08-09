@@ -15,16 +15,19 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
             <TextBox Margin="3" MinWidth="200" x:Name="TextBoxSearch"
-                     Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Content="Поиск" Margin="3" Command="{Binding Search}"
-                    CommandParameter="{Binding SearchString}" />
+                     Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}" >
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding Search}" CommandParameter="{Binding SearchString}" Key="Enter" />
+                </TextBox.InputBindings>
+            </TextBox>
+            <Button Content="Поиск" Margin="3" Command="{Binding Search}" CommandParameter="{Binding SearchString}" />
         </StackPanel>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding SearchResult}"
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Books}"
                   AutoGenerateColumns="False"
                   SelectionMode="Single"
                   SelectionUnit="FullRow"
                   CanUserAddRows="False"
-                  SelectedItem="{Binding Path=SelectedResult}"
+                  SelectedItem="{Binding Path=SelectedBook}"
                   CanUserDeleteRows="False"
                   IsReadOnly="True">
             <DataGrid.Columns>
@@ -40,7 +43,6 @@
                                     Command="{Binding Path=DataContext.ShowInCatalog, RelativeSource= {RelativeSource FindAncestor,  AncestorType={x:Type DataGrid}}}"
                                     Content="Открыть в каталоге" />
                             </StackPanel>
-
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

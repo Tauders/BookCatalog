@@ -16,14 +16,22 @@ namespace BooksCatalog.ViewModel
     public class TableViewModel : ViewModelBase
     {
         private readonly IDialogService _dialogService;
-        private readonly List<Book> _openedBooks = new List<Book>();
+        protected readonly List<Book> _openedBooks = new List<Book>();
 
         public TableViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
+            Books = Books ?? new ObservableCollection<Book>();
             Messenger.Default.Register<Catalog>(this, SetBooksByCatalog);
             Messenger.Default.Register<Book>(this, BooksMessageType.Saved,
-                book => { SetBooksByCatalogId(book.CatalogId); });
+                book =>
+                {
+                    var originalBook = Books.FirstOrDefault(x => x.Id == book.Id);
+                    if (originalBook != null)
+                    {
+                        Books[Books.IndexOf(originalBook)] = book;
+                    }
+                });
             Messenger.Default.Register<Book>(this, BooksMessageType.Closed,
                 book => { _openedBooks.RemoveAll(x => x.Id == book.Id); });
             Messenger.Default.Register<List<Book>>(this, books => { Books = new ObservableCollection<Book>(books); });

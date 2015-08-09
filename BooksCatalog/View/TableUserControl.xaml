@@ -22,9 +22,8 @@
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <Button
-                            Command="{Binding Path=DataContext.ShowDetails, RelativeSource= {RelativeSource FindAncestor,  AncestorType={x:Type DataGrid}}}">
-                            Подробнее
-                        </Button>
+                            Command="{Binding Path=DataContext.ShowDetails, RelativeSource= {RelativeSource FindAncestor,  AncestorType={x:Type DataGrid}}}"
+                            Content="Подробнее" />
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
