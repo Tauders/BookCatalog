@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:BooksCatalog.View"
         mc:Ignorable="d"
-        Title="Каталог книг" 
+        Title="Каталог книг"
         SizeToContent="WidthAndHeight"
         MinWidth="500"
         MinHeight="500"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <view:TreeUserControl Grid.Column="0" Grid.Row="0"/>
-        <view:TableUserControl Grid.Column="2" Grid.Row="0"/>
+        <view:TreeUserControl Grid.Column="0" Grid.Row="0" />
+        <view:TableUserControl Grid.Column="2" Grid.Row="0" />
     </Grid>
 </Window>

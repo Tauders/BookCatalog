@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:BooksCatalog.ViewModel"
         mc:Ignorable="d"
-        Title="Книга" 
+        Title="Книга"
         SizeToContent="Height"
         MaxWidth="500"
         Name="BookWindow"
@@ -21,26 +21,27 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label
-                Grid.Row="0" Grid.Column="0"
-                Content="Название:"
-                Target="{Binding ElementName=TextBoxTitle}" />
+            Grid.Row="0" Grid.Column="0"
+            Content="Название:"
+            Target="{Binding ElementName=TextBoxTitle}" />
         <TextBox
-                x:Name="TextBoxTitle"
-                Grid.Row="0" Grid.Column="1"
-                Text="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}" />
+            x:Name="TextBoxTitle"
+            Grid.Row="0" Grid.Column="1"
+            Text="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}" />
         <Label
-                Grid.Row="1" Grid.Column="0"
-                Content="Аннотация:"
-                Target="{Binding ElementName=TextBoxAnnotation}" />
+            Grid.Row="1" Grid.Column="0"
+            Content="Аннотация:"
+            Target="{Binding ElementName=TextBoxAnnotation}" />
         <TextBox
-                x:Name="TextBoxAnnotation"
-                Grid.Row="1" Grid.Column="1"
-                TextWrapping="Wrap" AcceptsReturn="True"
-                Height="60"
-                Text="{Binding Path=Annotation, UpdateSourceTrigger=PropertyChanged}" />
+            x:Name="TextBoxAnnotation"
+            Grid.Row="1" Grid.Column="1"
+            TextWrapping="Wrap" AcceptsReturn="True"
+            Height="60"
+            Text="{Binding Path=Annotation, UpdateSourceTrigger=PropertyChanged}" />
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
-            <Button MinWidth="75" Margin="3" Content="Сохранить" Command="{Binding Save}"/>
-            <Button MinWidth="75" Margin="3" Content="Отмена" Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=BookWindow}"/>
+            <Button MinWidth="75" Margin="3" Content="Сохранить" Command="{Binding Save}" />
+            <Button MinWidth="75" Margin="3" Content="Отмена" Command="{Binding CloseWindow}"
+                    CommandParameter="{Binding ElementName=BookWindow}" />
         </StackPanel>
     </Grid>
 </Window>

@@ -13,10 +13,12 @@
               SelectionMode="Single"
               SelectionUnit="FullRow"
               CanUserAddRows="False"
-              SelectedItem="{Binding Path=SelectedBook}">
+              SelectedItem="{Binding Path=SelectedBook}"
+              CanUserDeleteRows="False"
+              IsReadOnly="True">
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Название" Binding="{Binding Path=Title}" />
-            <DataGridTemplateColumn Header="Действия">
+            <DataGridTextColumn Header="Название" Binding="{Binding Path=Title}" Width="Auto" />
+            <DataGridTemplateColumn Header="Действия" Width="Auto">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <Button

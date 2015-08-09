@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using AutoMapper;
 using BooksCatalog.Model;
 using BooksCatalog.Model.Entities;
 using BooksCatalog.Model.Interface;
-using BooksCatalog.View;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -15,15 +10,36 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace BooksCatalog.ViewModel
 {
-    public class BookViewModel:ViewModelBase
+    public class BookViewModel : ViewModelBase
     {
+        private RelayCommand<object> _closeCommand;
+        private RelayCommand _save;
+
         public BookViewModel(Book book)
         {
-            Title = book.Title;
-            Id = book.Id;
-            Annotation = book.Annotation;
-            CatalogId = book.CatalogId;
+            Mapper.Map(book, this);
         }
+
+        public RelayCommand Save => _save ?? (_save = new RelayCommand(SaveCommand));
+
+        public RelayCommand<object> CloseWindow
+            => _closeCommand ?? (_closeCommand = new RelayCommand<object>(CloseWindowCommand));
+
+        private void SaveCommand()
+        {
+            Book book = Mapper.Map<Book>(this);
+            ServiceLocator.Current.GetInstance<IRepository<Book>>().Update(book);
+            Messenger.Default.Send(book, BooksMessageType.Saved);
+        }
+
+        //TODO добавить обработку закрытия по крестику
+        private void CloseWindowCommand(object obj)
+        {
+            Window win = obj as Window;
+            Messenger.Default.Send(Mapper.Map<Book>(this), BooksMessageType.Closed);
+            win.Close();
+        }
+
         #region Id
 
         private long _id;
@@ -71,30 +87,5 @@ namespace BooksCatalog.ViewModel
         }
 
         #endregion
-
-        private RelayCommand _save;
-
-        public RelayCommand Save => _save ?? (_save = new RelayCommand(SaveCommand));
-
-        private void SaveCommand()
-        {
-            Book book = new Book() {Id = Id, Annotation = Annotation, CatalogId = CatalogId, Title = Title};
-            ServiceLocator.Current.GetInstance<IRepository<Book>>().Update(new Book() { Id=Id,Annotation = Annotation,CatalogId = CatalogId,Title = Title});
-            Messenger.Default.Send(book, BooksMessageType.Saved);
-        }
-
-        private RelayCommand<object> _closeCommand;
-
-        public RelayCommand<object> CloseWindow => _closeCommand ?? (_closeCommand = new RelayCommand<object>(CloseWindowCommand));
-
-        //TODO добавить обработку закрытия по крестику
-        private void CloseWindowCommand(object obj)
-        {
-            Book book = new Book() { Id = Id, Annotation = Annotation, CatalogId = CatalogId, Title = Title };
-            Window win = obj as Window;
-            Messenger.Default.Send(book, BooksMessageType.Closed);
-            win.Close();
-        }
-
     }
 }

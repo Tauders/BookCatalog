@@ -12,6 +12,7 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using BooksCatalog.Model;
 using BooksCatalog.Model.Entities;
 using BooksCatalog.Model.Implementation;
 using BooksCatalog.Model.Interface;
@@ -32,6 +33,7 @@ namespace BooksCatalog.ViewModel
         /// </summary>
         public ViewModelLocator()
         {
+            AutoMapperConfiguration.Install();
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             SimpleIoc.Default.Register<IRepository<Book>>(
@@ -45,9 +47,7 @@ namespace BooksCatalog.ViewModel
         }
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
-
         public TreeViewModel Tree => ServiceLocator.Current.GetInstance<TreeViewModel>();
-
         public TableViewModel Table => ServiceLocator.Current.GetInstance<TableViewModel>();
 
         public static void Cleanup()

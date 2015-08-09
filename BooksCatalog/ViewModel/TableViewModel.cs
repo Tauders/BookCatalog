@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using BooksCatalog.Model;
@@ -16,16 +15,20 @@ namespace BooksCatalog.ViewModel
 {
     public class TableViewModel : ViewModelBase
     {
-        private List<Book> _openedBooks = new List<Book>();
         private readonly IDialogService _dialogService;
+        private readonly List<Book> _openedBooks = new List<Book>();
         private ObservableCollection<Book> _books;
+        private Book _selectedBook;
+        private RelayCommand _showDetails;
 
         public TableViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
             Messenger.Default.Register<Catalog>(this, SetBooksByCatalog);
-            Messenger.Default.Register<Book>(this, BooksMessageType.Saved, book => { SetBooksByCatalogId(book.CatalogId); });
-            Messenger.Default.Register<Book>(this, BooksMessageType.Closed, book => { _openedBooks.RemoveAll(x=>x.Id==book.Id); });
+            Messenger.Default.Register<Book>(this, BooksMessageType.Saved,
+                book => { SetBooksByCatalogId(book.CatalogId); });
+            Messenger.Default.Register<Book>(this, BooksMessageType.Closed,
+                book => { _openedBooks.RemoveAll(x => x.Id == book.Id); });
         }
 
         public ObservableCollection<Book> Books
@@ -34,15 +37,11 @@ namespace BooksCatalog.ViewModel
             set { Set(() => Books, ref _books, value); }
         }
 
-        private Book _selectedBook;
-
         public Book SelectedBook
         {
             get { return _selectedBook; }
             set { Set(() => SelectedBook, ref _selectedBook, value); }
         }
-
-        private RelayCommand _showDetails;
 
         public RelayCommand ShowDetails => _showDetails ?? (_showDetails = new RelayCommand(ShowDetailsCommand));
 

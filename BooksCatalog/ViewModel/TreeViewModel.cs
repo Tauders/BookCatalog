@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using AutoMapper;
 using BooksCatalog.Model.Entities;
 using BooksCatalog.Model.Interface;
 using GalaSoft.MvvmLight;
@@ -25,9 +26,7 @@ namespace BooksCatalog.ViewModel
 
         private TreeViewModel(Catalog catalog)
         {
-            Id = catalog.Id;
-            Title = catalog.Title;
-            ParentId = catalog.ParentId;
+            Mapper.Map(catalog, this);
             Children = new ObservableCollection<TreeViewModel>();
         }
 
@@ -75,8 +74,8 @@ namespace BooksCatalog.ViewModel
             set
             {
                 Set(() => IsSelected, ref _isSelected, value);
-                var id = this.Id;
-                if (id != null) Messenger.Default.Send(new Catalog() {Id = id.Value});
+                var id = Id;
+                if (id != null) Messenger.Default.Send(new Catalog {Id = id.Value});
             }
         }
 

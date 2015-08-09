@@ -3,11 +3,11 @@
 namespace BooksCatalog.View
 {
     /// <summary>
-    ///     Interaction logic for BookView.xaml
+    ///     Interaction logic for SearchWindow.xaml
     /// </summary>
-    public partial class BookView : Window
+    public partial class SearchWindow : Window
     {
-        public BookView()
+        public SearchWindow()
         {
             InitializeComponent();
         }
